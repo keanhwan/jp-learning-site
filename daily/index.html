@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1달 학습 플랜</title>
+  <link rel="stylesheet" href="../assets/css/site.css?v=2025-08">
+</head>
+<body>
+  <header>
+    <h1>1달 학습 플랜</h1>
+    <nav><a href="../index.html">홈</a></nav>
+  </header>
+  <main>
+    <ul id="day-list"></ul>
+  </main>
+  <script src="../assets/js/app.js?v=2025-08"></script>
+  <script>
+    // daily_plan.json을 로드하여 목록 생성
+    fetch('../data/daily_plan.json?v=2025-08')
+      .then(res => res.json())
+      .then(plan => {
+        const list = document.getElementById('day-list');
+        plan.forEach((day, idx) => {
+          const li = document.createElement('li');
+          const link = document.createElement('a');
+          link.href = 'day.html?d=' + (idx + 1);
+          link.textContent = 'Day ' + (idx + 1) + ': ' + day.title;
+          li.appendChild(link);
+          list.appendChild(li);
+        });
+      })
+      .catch(() => {
+        document.getElementById('day-list').textContent = '학습 플랜을 불러올 수 없습니다.';
+      });
+  </script>
+</body>
+</html>

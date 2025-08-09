@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>한국인을 위한 초급 일본어</title>
+  <link rel="stylesheet" href="assets/css/site.css?v=2025-08">
+</head>
+<body>
+  <header>
+    <h1>한국인을 위한 초급 일본어</h1>
+    <nav>
+      <a href="daily/">1달 학습 플랜</a> |
+      <a href="quiz.html">최근 퀴즈</a> |
+      <a href="resources/">자료실</a>
+    </nav>
+    <button id="btn-enable-sound">🔊 소리 켜기</button>
+  </header>
+  <main>
+    <section>
+      <h2>어제 공부한 것</h2>
+      <p id="yesterday-info"></p>
+      <button id="btn-review-yesterday" hidden>어제 복습</button>
+    </section>
+    <section>
+      <h2>지난 7일 공부한 것</h2>
+      <p id="last7-info"></p>
+      <button id="btn-review-last7" hidden>지난 7일 복습</button>
+    </section>
+  </main>
+  <script src="assets/js/app.js?v=2025-08"></script>
+  <script>
+    // 초기화 및 복습 버튼 설정
+    document.addEventListener('DOMContentLoaded', () => {
+      const yItems = jpApp.getYesterdayReviewSet();
+      if (yItems.length) {
+        document.getElementById('btn-review-yesterday').hidden = false;
+        document.getElementById('yesterday-info').textContent = yItems.length + '개 항목';
+        document.getElementById('btn-review-yesterday').onclick = () => jpApp.startQuiz(yItems);
+      }
+      const last7Items = jpApp.getLast7DaysReviewSet();
+      if (last7Items.length) {
+        document.getElementById('btn-review-last7').hidden = false;
+        document.getElementById('last7-info').textContent = last7Items.length + '개 항목';
+        document.getElementById('btn-review-last7').onclick = () => jpApp.startQuiz(last7Items);
+      }
+    });
+  </script>
+</body>
+</html>
